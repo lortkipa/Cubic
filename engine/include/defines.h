@@ -31,3 +31,17 @@ typedef uint_fast64_t fu64;
 /*--------------------floats--------------------*/
 typedef float f32;
 typedef double f64;
+
+/*--------------------platform--------------------*/
+#ifdef __linux__
+    #define CUBIC_PLATFORM_LINUX
+#endif
+#ifdef __WIN32
+    #define CUBIC_PLATFORM_WINDOWS
+#endif
+#ifdef __APPLE__
+    #define CUBIC_PLATFORM_APPLE
+#endif
+#ifdef __ANDROID__
+    #define CUBIC_PLATFORM_ANDROID
+#endif
