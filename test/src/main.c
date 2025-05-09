@@ -1,11 +1,7 @@
-#include <CubicEngine/defines.h>
-#include <CubicEngine/iostream/logger.h>
+#include <CubicEngine/core.h>
 
 int main(void)
 {
-    CUBIC_LOG_ERROR("logging error {f}", 3.14);
-    CUBIC_LOG_WARNING("logging error {f}", 3.14);
-    CUBIC_LOG_SUCCESS("logging error {f}", 3.14);
-    CUBIC_LOG_TRACE("logging error {f}", 3.14);
-    CUBIC_LOG("logging error {f}", 3.14);
+    CUBIC_ASSERT(1 == 1, "shit app failed");
+    CUBIC_ASSERT(1 == 2, "shit app failed");
 }
