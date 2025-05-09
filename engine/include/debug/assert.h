@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CubicEngine/defines.h"
-#include "CubicEngine/iostream/logger.h"
+#include "CubicEngine/debug/logger.h"
 
 #include <stdlib.h>
 

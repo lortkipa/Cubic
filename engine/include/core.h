@@ -1,4 +1,4 @@
 #pragma once
 
-#include "CubicEngine/debug.h"
-#include "CubicEngine/iostream/logger.h"
+#include "CubicEngine/debug/logger.h"
+#include "CubicEngine/debug/assert.h"
