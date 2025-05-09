@@ -5,6 +5,7 @@
 
 static const char* const colors[] =
 {
+    [CUBIC_LOG_TYPE_NORMAL]   =  "\e[0;37m",  // white (default)
     [CUBIC_LOG_TYPE_ERROR]    =  "\e[0;31m",  // red
     [CUBIC_LOG_TYPE_WARNING]  =  "\e[0;33m",  // yellow
     [CUBIC_LOG_TYPE_SUCCESS]  =  "\e[0;32m",  // green
@@ -73,5 +74,5 @@ void cubic_log(const cubic_log_types type, const char* format, ...)
     va_end(arg);
 
     // reset color and start new line
-    puts("\e[0;37m");
+    puts(colors[CUBIC_LOG_TYPE_NORMAL]);
 }
