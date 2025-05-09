@@ -2,6 +2,8 @@
 
 int main(void)
 {
+    cubic_memory_startup();
+
     i8* data = cubic_memory_allocate(2 * sizeof(i8));
     data[0] = 14;
     data[1] = 16;
@@ -17,4 +19,6 @@ int main(void)
     }
 
     data = cubic_memory_free(data);
+
+    cubic_memory_shutdown();
 }

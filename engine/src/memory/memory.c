@@ -29,7 +29,7 @@ void cubic_memory_shutdown(void)
 
     // log
     CUBIC_LOG_SUCCESS("memory allocator stoped tracking");
-    CUBIC_LOG_TRACE("allocated (count): {i}. reallocated: {i}. freed: {i}", allocator.allocated, allocator.reallocated, allocator.freed);
+    CUBIC_LOG_TRACE("(count) allocated: {i}. reallocated: {i}. freed: {i}", allocator.allocated, allocator.reallocated, allocator.freed);
 }
 
 cubic_memory_allocator cubic_memory_getAllocator(void)
