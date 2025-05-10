@@ -4,4 +4,5 @@
 #include "CubicEngine/debug/logger.h"
 #include "CubicEngine/debug/assert.h"
 #include "CubicEngine/memory/memory.h"
+#include "CubicEngine/math/math.h"
 #include "CubicEngine/app/app.h"
