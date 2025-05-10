@@ -4,21 +4,14 @@ int main(void)
 {
     cubic_memory_startup();
 
-    i8* data = cubic_memory_allocate(2 * sizeof(i8));
-    data[0] = 14;
-    data[1] = 16;
-
-    data = cubic_memory_reallocate(data, 3 * sizeof(i8));
-    data[2] = 25;
-
-    cubic_memory_clear(data, 3 * sizeof(i8));
-
-    for (fu8 i = 0; i < 3; i++)
+    cubic_app* app;
+    cubic_app_subscribe(&app);
+    cubic_app_startup(400, 400, "Cubic Engine");
+    while (app->running)
     {
-        CUBIC_LOG_TRACE("{i}. {i}", i + 1, data[i]);
+        cubic_app_updateState();
     }
-
-    data = cubic_memory_free(data);
+    cubic_app_shutdown();
 
     cubic_memory_shutdown();
 }

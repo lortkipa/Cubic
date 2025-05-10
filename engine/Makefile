@@ -2,7 +2,7 @@ project = CubicEngine
 compiler = gcc
 headers = include/*
 sources = $(shell find src -name *.c)
-libraries = 
+libraries = -lX11
 flags = -fPIC -shared -Wall -Wextra
 
 build:
