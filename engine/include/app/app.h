@@ -14,6 +14,8 @@ void cubic_app_shutdown(void);
 
 void cubic_app_subscribe(cubic_app** pp_app);
 
+cubic_app cubic_app_getApp(void);
+ 
 void cubic_app_updateState(void);
 
 b cubic_app_keyDown(const u16 key);

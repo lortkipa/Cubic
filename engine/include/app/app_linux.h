@@ -15,4 +15,6 @@ typedef struct cubic_linuxApp_state {
     Atom exitMessage;
 } cubic_linuxApp_state;
 
+cubic_linuxApp_state cubic_app_getLinuxState(void);
+
 #endif

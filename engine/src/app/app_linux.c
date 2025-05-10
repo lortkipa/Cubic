@@ -71,7 +71,14 @@ void cubic_app_shutdown(void)
 
 void cubic_app_subscribe(cubic_app** pp_app)
 {
+    // asign app structure pointer to user provided variable
     *pp_app = &app;
+}
+
+cubic_app cubic_app_getApp(void)
+{
+    // return application structure
+    return app;
 }
 
 void cubic_app_updateState(void)
@@ -124,6 +131,12 @@ b cubic_app_keyDown(const u16 key)
 
     // return false as default if true is not returned in code above
     return false;
+}
+
+cubic_linuxApp_state cubic_app_getLinuxState(void)
+{
+    // return linux state structure
+    return linuxState;
 }
 
 #endif
