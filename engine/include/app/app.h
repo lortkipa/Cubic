@@ -2,6 +2,9 @@
 
 #include "CubicEngine/defines.h"
 
+#define CUBIC_OPENGL_MAJOR_VERSION 3
+#define CUBIC_OPENGL_MINOR_VERSION 3
+
 typedef struct cubic_app {
     b running;
     u16 width;

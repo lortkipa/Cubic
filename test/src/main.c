@@ -1,4 +1,5 @@
 #include <CubicEngine/core.h>
+#include <GL/glew.h>
 
 int main(void)
 {

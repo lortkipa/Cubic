@@ -7,9 +7,29 @@
 #include "CubicEngine/debug/logger.h"
 
 #include <X11/Xutil.h>
+#include <GL/gl.h>
+#include <GL/glx.h>
+
+typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
 
 static cubic_app app;
 static cubic_linuxApp_state linuxState;
+
+static int visual_attribs[] =
+{
+    GLX_X_RENDERABLE    , True,
+    GLX_DRAWABLE_TYPE   , GLX_WINDOW_BIT,
+    GLX_RENDER_TYPE     , GLX_RGBA_BIT,
+    GLX_X_VISUAL_TYPE   , GLX_TRUE_COLOR,
+    GLX_RED_SIZE        , 8,
+    GLX_GREEN_SIZE      , 8,
+    GLX_BLUE_SIZE       , 8,
+    GLX_ALPHA_SIZE      , 8,
+    GLX_DEPTH_SIZE      , 24,
+    GLX_STENCIL_SIZE    , 8,
+    GLX_DOUBLEBUFFER    , True,
+    None
+};
 
 void cubic_app_startup(const u16 width, const u16 height, const char* const title)
 {
@@ -52,6 +72,24 @@ void cubic_app_startup(const u16 width, const u16 height, const char* const titl
     linuxState.exitMessage = XInternAtom(linuxState.display, "WM_DELETE_WINDOW", False);
     XSetWMProtocols(linuxState.display, linuxState.window, &linuxState.exitMessage, 1);
 
+    // create opengl context
+    i32 fbcount;
+    GLXFBConfig* fbc = glXChooseFBConfig(linuxState.display, linuxState.screen, visual_attribs, &fbcount);
+    CUBIC_ASSERT(fbcount > 0, "failed to retrieve a framebuffer config");
+    glXCreateContextAttribsARBProc glXCreateContextAttribsARB = (glXCreateContextAttribsARBProc) glXGetProcAddress((const GLubyte*)"glXCreateContextAttribsARB");
+    static int context_attribs[] = {
+        GLX_CONTEXT_MAJOR_VERSION_ARB, CUBIC_OPENGL_MAJOR_VERSION,
+        GLX_CONTEXT_MINOR_VERSION_ARB, CUBIC_OPENGL_MINOR_VERSION,
+        GLX_CONTEXT_PROFILE_MASK_ARB,  GLX_CONTEXT_CORE_PROFILE_BIT_ARB,
+        None
+    };
+    linuxState.context = glXCreateContextAttribsARB(linuxState.display, fbc[0], NULL, true, context_attribs);
+    CUBIC_ASSERT(linuxState.context, "can not create OpenGL context");
+    glXMakeCurrent(linuxState.display, linuxState.window, linuxState.context);
+
+    // set opengl draw window
+    glViewport(0, 0, width, height);
+
     // show the window
     XMapWindow(linuxState.display, linuxState.window);
 }
@@ -60,6 +98,10 @@ void cubic_app_shutdown(void)
 {
     // end the app
     app.running = false;
+
+    // destroy opengl context
+    glFlush();
+    glXDestroyContext(linuxState.display, linuxState.context);
 
     // destroy window
     XDestroyWindow(linuxState.display, linuxState.window);
@@ -83,6 +125,9 @@ cubic_app cubic_app_getApp(void)
 
 void cubic_app_updateState(void)
 {
+    // swap opengl buffer
+    glXSwapBuffers(linuxState.display, linuxState.window);
+
     // continue if there are pending events
     while (XPending(linuxState.display))
     {
@@ -94,8 +139,8 @@ void cubic_app_updateState(void)
 
         switch (linuxState.event.type) 
         {
-            case ClientMessage: // from user
-                
+            case ClientMessage: // event from user
+
                 // close the window on user request
                 if (linuxState.event.xclient.data.l[0] == (u32)linuxState.exitMessage)
                 {
@@ -103,19 +148,24 @@ void cubic_app_updateState(void)
                 }
 
                 break;
-            case Expose: // resize
-                         
+            case Expose: // resize event
+
                 // get resized window new attributes
                 XGetWindowAttributes(linuxState.display, linuxState.window, &attBuffer);
 
                 // asing new window size to app structure
                 app.width = attBuffer.width;
                 app.height = attBuffer.height;
-                CUBIC_LOG_TRACE("application window resized: {i}.{i}", app.width, app.height);
+                CUBIC_LOG_TRACE("application window resized: {i}x{i}", app.width, app.height);
+
+                // resize opengl draw window
+                glViewport(0, 0, app.width, app.height);
 
                 break;
-            case KeyPress:
+            case KeyPress: // key press event
+
                 CUBIC_LOG_TRACE("key pressed with code: {i}", linuxState.event.xkey.keycode);
+
                 break;
         }
     }
