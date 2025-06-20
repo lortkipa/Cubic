@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "C:/Users/Nika/Cubic/testbed",
+    "file": "src/game.c",
+    "command": "clang src/game.c  -Wall -Wextra -Isrc -I../engine/src -O0 -o testbed.exe"
+  }
+]
