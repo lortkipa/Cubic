@@ -34,7 +34,7 @@ typedef uint_fast64_t fu64;
 
 /*--------------------exports--------------------*/
 #if defined(PLATFORM_WINDOWS)
-    #ifdef _MSC_VER
+    #if defined(_MSC_VER)
         #define EXPORT __declspec(dllexport)
     #else
         #define EXPORT __attribute__((visibility("default")))
