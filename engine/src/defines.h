@@ -6,7 +6,7 @@
 typedef int8_t b8;
 #define true (1)
 #define false (0)
-#define null (void*(0))
+#define null ((void*)0)
 
 /*--------------------floats--------------------*/
 typedef float f32;
