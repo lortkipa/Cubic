@@ -31,3 +31,14 @@ typedef uint_fast8_t fu8;
 typedef uint_fast16_t fu16;
 typedef uint_fast32_t fu32;
 typedef uint_fast64_t fu64;
+
+/*--------------------exports--------------------*/
+#if defined(PLATFORM_WINDOWS)
+    #ifdef _MSC_VER
+        #define EXPORT __declspec(dllexport)
+    #else
+        #define EXPORT __attribute__((visibility("default")))
+    #endif
+#else
+    #define EXPORT
+#endif
