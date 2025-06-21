@@ -1,6 +1,6 @@
 COMPILER = clang
-SOURCES = $(wildcard src/core/*.c)
-LIBRARIES =
+SOURCES = $(wildcard src/*.c)
+LIBRARIES = 
 FLAGS = -Wall -Wextra -fPIC -shared -Isrc -I../engine/src -DPLATFORM_LINUX
 VERSION = -std=c23
 OUTPUT = engine

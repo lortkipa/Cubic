@@ -1,6 +1,6 @@
 COMPILER = clang
-SOURCES = $(wildcard src/core/*.c)
-LIBRARIES =
+SOURCES = $(wildcard src/core/*.c) $(wildcard src/platform/window/*.c)
+LIBRARIES = -luser32
 FLAGS = -Wall -Wextra -shared -Isrc -I../engine/src -DPLATFORM_WINDOWS
 VERSION = -std=c23
 OUTPUT = engine

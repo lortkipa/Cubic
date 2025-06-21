@@ -1,6 +1,6 @@
 #include "core/logger.h"
 #include "core/memory.h"
-#include "core/string.h"
+#include "platform/window/window.h"
 
 int main(void)
 {
@@ -8,12 +8,16 @@ int main(void)
     StartupLoggerSystem(LOG_LEVEL_ERROR_BIT | LOG_LEVEL_WARNING_BIT | LOG_LEVEL_SUCCESS_BIT | LOG_LEVEL_INFO_BIT);
     StartupMemorySystem();
 
-    String name = CreateString();
-    AsignString(&name, "Nikoloz");
-    LogInfo("Game", "Data: %s. Length: %d", name.data, name.length);
-    AsignString(&name, "Dito");
-    LogInfo("Game", "Data: %s. Length: %d", name.data, name.length);
-    DestroyString(&name);
+    AppWindow window;
+    CreateAppWindow(&window, "Cubic Game", 1000, 800);
+
+    while (true)
+    {
+        ProccessWindowEvents();
+    }
+
+    DestroyAppWindow();
+
 
     // shutdown
     ShutdownMemorySystem();
