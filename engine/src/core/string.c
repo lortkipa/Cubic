@@ -1,5 +1,6 @@
 #include "core/string.h"
 #include "core/memory.h"
+#include "core/assert.h"
 #include <string.h>
 
 String CreateString(void)
@@ -17,6 +18,9 @@ String CreateString(void)
 
 void DestroyString(String* p_string)
 {
+    // check params
+    Assert("String", p_string != null, "Invalid String Pointer");
+
     // if data is not null, free it from heap
     if (p_string->data)
     {
@@ -29,6 +33,10 @@ void DestroyString(String* p_string)
 
 void AsignString(String* p_string, const char* data)
 {
+    // check params
+    Assert("String", p_string != null, "Invalid String Pointer");
+    Assert("String", data != null, "Invalid Data Pointer");
+
     // if there is string data on heap, free it
     if (p_string->data)
     {
